@@ -8,6 +8,8 @@ Project 1 - The Number Guessing Game
 
 import random
 
+from statistics import mean, median, mode
+
 
 # Create the start_game function.
 # Write your code inside this function.
@@ -29,19 +31,42 @@ import random
 
 # Kick off the program by calling the start_game function.
 high_score = 0
+attempts_list = []
+
+def calculate_statistics(numbers):
+
+    # Calculate mean
+    mean_value = mean(numbers)
+
+    # Calculate median
+    median_value = median(numbers)
+
+    # Calculate mode
+    try:
+        mode_value = mode(numbers)
+    except statistics.StatisticsError:
+        mode_value = "No unique mode"
+
+    # Print results
+    print(f"The mean value of the attempts is: {mean_value}")
+    print(f"The median value of the attempts is: {median_value}")
+    print(f"The mode value of the attempts is: {mode_value}")
+
+
 def start_game():
     global high_score
     print("Welcome to the Number Guessing Game!")
-    print("I'm thinking of a number between 1 and 10.")
+    print("I'm thinking of a number between 1 and 100.")
     print("Try to guess the number.")
     if(high_score > 0):
         print(f"The current high score is {high_score}. Good luck")
-    answer = random.randint(1, 10)
+    answer = random.randint(1, 100)
     attempts = 0
     while True:
         try:
             guess = int(input("Your guess: "))
-            if guess < 1 or guess > 10:
+            attempts_list.append(guess)
+            if guess < 1 or guess > 100:
                 print("Please enter a number between 1 and 10.")
                 continue
             attempts += 1
@@ -52,6 +77,7 @@ def start_game():
             else:
                 print("Got it!")
                 print(f"It took you {attempts} attempts.")
+                calculate_statistics(attempts_list)
                 if high_score == 0 or attempts < high_score:
                     high_score = attempts
                     print(f"Congratulations! You have the new high score: {high_score}")
@@ -71,3 +97,8 @@ def start_game():
 
 
 start_game()
+
+
+
+
+

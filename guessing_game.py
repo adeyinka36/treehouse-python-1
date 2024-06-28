@@ -65,7 +65,6 @@ def start_game():
     while True:
         try:
             guess = int(input("Your guess: "))
-            attempts_list.append(guess)
             if guess < 1 or guess > 100:
                 print("Please enter a number between 1 and 10.")
                 continue
@@ -77,6 +76,7 @@ def start_game():
             else:
                 print("Got it!")
                 print(f"It took you {attempts} attempts.")
+                attempts_list.append(attempts)
                 calculate_statistics(attempts_list)
                 if high_score == 0 or attempts < high_score:
                     high_score = attempts
